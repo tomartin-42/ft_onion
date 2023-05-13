@@ -1,12 +1,11 @@
-FROM nginx:alpine
+FROM nginx:stable
 
 # Instalar Tor y OpenSSH Server
-RUN apk update && apk add --no-cache tor openssh-server
+RUN apt update && apt upgrade tor openssh-server -y
 
-# Crear el directorio /var/run/sshd
-RUN mkdir /var/run/sshd
-
+COPY docker-entrypoint.sh /
 COPY torrc /etc/tor/
+COPY sshd_config /etc/ssh/
 
 # Copy page web files
 COPY index.html /usr/share/nginx/html/

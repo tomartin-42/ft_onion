@@ -4,7 +4,7 @@ NAME = ft_onion
 
 all:
 	@docker build -t $(NAME) .
-	@docker run -p 80:80 --name $(NAME) -d $(NAME)
+	@docker run -p 80:80 -p 4242:22 --name $(NAME) -d $(NAME)
 
 reset:
 	@echo "Deteniendo y eliminando contenedores..."
@@ -16,3 +16,13 @@ reset:
 	@docker volume prune -f
 	@echo "Reset de Docker completado"
 
+in: all
+	docker exec -ti ft_onion /bin/sh
+
+rerun:
+	@docker stop $(NAME)
+	@docker rm $(NAME)
+	@docker build -t $(NAME) .
+	@docker run -p 80:80 -p 4242:22 --name $(NAME) -d $(NAME)
+
+re: reset all
