@@ -5,6 +5,8 @@ NAME = ft_onion
 all:
 	@docker build -t $(NAME) .
 	@docker run -p 80:80 -p 4242:22 --name $(NAME) -d $(NAME)
+	@echo "Password:"
+	@docker exec -it ft_onion cat pass.txt
 
 reset:
 	@echo "Deteniendo y eliminando contenedores..."

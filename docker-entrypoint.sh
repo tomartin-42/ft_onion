@@ -5,6 +5,9 @@ set -e
 
 service ssh start
 tor -f /etc/tor/torrc &
+CLAVE=$(openssl rand -base64 32)
+echo $CLAVE > pass.txt
+useradd -m -p "$(openssl passwd $CLAVE)" tomartin
 
 entrypoint_log() {
     if [ -z "${NGINX_ENTRYPOINT_QUIET_LOGS:-}" ]; then
