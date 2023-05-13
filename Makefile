@@ -7,6 +7,8 @@ all:
 	@docker run -p 80:80 -p 4242:22 --name $(NAME) -d $(NAME)
 	@echo "Password:"
 	@docker exec -it ft_onion cat pass.txt
+	@echo "Hash:"
+	@docker exec -it $(NAME) cat /var/lib/tor/other_hidden_service/hostname
 
 reset:
 	@echo "Deteniendo y eliminando contenedores..."
